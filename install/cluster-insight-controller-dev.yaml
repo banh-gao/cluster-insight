@@ -2,7 +2,7 @@ kind: ReplicationController
 apiVersion: v1
 metadata:
   name: cluster-insight-controller
-  namespace: default
+  namespace: dev
 spec:
   replicas: 1
   template:
@@ -13,7 +13,12 @@ spec:
     spec:
       containers:
         - name: cluster-insight
-          image: dzozin/cluster-insight:patched
+          image: dzozin/cluster-insight:testing
+          command:
+            - python
+          args:
+            - ./collector.py
+            - --debug
           ports:
             - name: cluster-insight
               containerPort: 5555

@@ -317,6 +317,11 @@ def get_image_from_container(container):
   timestamp = container['timestamp']
   image_name = container['properties']['status']['image']
   image_id = container['properties']['status']['imageID']
+
+  # Workaround to avoid crash when returned imageID is empty
+  if image_id == '':
+    image_id = image_name
+    
   obj = {'metadata': {'name': image_name}}
   return utilities.wrap_object(obj, 'Image', image_id, timestamp,
                                label=image_name)
